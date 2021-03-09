@@ -32,7 +32,7 @@ namespace story {
      */
     //% blockId="story_clear_all_text"
     //% block="cancel current text"
-    //% help="github:arcade-storycancel-current-text.md"
+    //% help="github:arcade-story/cancel-current-text.md"
     //% group="Cutscene"
     export function clearAllText() {
         for (const bubble of getAllBubbles()) {

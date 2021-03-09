@@ -116,7 +116,7 @@ namespace story {
      */
     //% blockId=arcade_story_start_cutscene
     //% block="start cutscene"
-    //% help="github:arcade-story/start-cutscene.md"
+    //% help="github:arcade-story//start-cutscene.md"
     //% weight=100
     //% handlerStatement=1
     //% group="Cutscene"
@@ -160,7 +160,7 @@ namespace story {
      */
     //% blockId=arcade_story_print_character_text
     //% block="print character text $text|| with label $label"
-    //% help="github:arcade-story/print-character-text.md"
+    //% help="github:arcade-story//print-character-text.md"
     //% weight=90
     //% group="Cutscene"
     //% blockGap=8
@@ -204,7 +204,7 @@ namespace story {
      */
     //% blockId=arcade_story_show_player_choices
     //% block="show player choices $choice1 $choice2 ||$choice3 $choice4 $choice5"
-    //% help="github:arcade-story/show-player-choices.md"
+    //% help="github:arcade-story//show-player-choices.md"
     //% inlineInputMode=inline
     //% weight=80
     //% blockGap=8
@@ -226,7 +226,7 @@ namespace story {
      */
     //% blockId=arcade_story_last_answer
     //% block="last answer equals $choice"
-    //% help="github:arcade-story/last-answer-equals.md"
+    //% help="github:arcade-story//last-answer-equals.md"
     //% weight=70
     //% group="Cutscene"
     export function checkLastAnswer(choice: string): boolean {
@@ -247,7 +247,7 @@ namespace story {
      */
     //% blockId=arcade_story_cancel_cutscene
     //% block="cancel cutscene"
-    //% help="github:arcade-story/cancel-cutscene.md"
+    //% help="github:arcade-story//cancel-cutscene.md"
     //% weight=60
     //% blockGap=8
     //% group="Cutscene"
