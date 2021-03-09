@@ -13,7 +13,7 @@ namespace story {
      */
     //% blockId=story_show_text
     //% block="print $text at x $x y $y||with text color $foreground back color $background $speed"
-    //% help="github:arcade-storytelling/docs/print-text.md"
+    //% help="github:arcade-storytelling/print-text.md"
     //% text.defl=":)"
     //% foreground.shadow=colorindexpicker
     //% foreground.defl=15
@@ -40,7 +40,7 @@ namespace story {
      */
     //% blockId=story_sprite_say_text
     //% block="$sprite say $text ||with text color $foreground back color $background $speed"
-    //% help="github:arcade-storytelling/docs/sprite-say.md"
+    //% help="github:arcade-storytelling/sprite-say.md"
     //% text.defl=":)"
     //% sprite.shadow=variables_get
     //% sprite.defl=sprite
@@ -134,7 +134,7 @@ namespace story {
      */
     //% blockId=story_print_dialog
     //% block="print $text at camera x $x y $y in box width $width height $height||with text color $foreground back color $background $speed"
-    //% help="github:arcade-storytelling/docs/print-dialog.md"
+    //% help="github:arcade-storytelling/print-dialog.md"
     //% text.defl=":)"
     //% foreground.shadow=colorindexpicker
     //% foreground.defl=15
@@ -164,7 +164,7 @@ namespace story {
      */
     //% blockId=story_set_page_pause_length
     //% block="set page pause (ms) $pagePauseMillis and final page pause (ms) $finalPagePauseMillis"
-    //% help="github:arcade-storytelling/docs/set-page-pause-length.md"
+    //% help="github:arcade-storytelling/set-page-pause-length.md"
     //% pagePauseMillis.shadow=timePicker
     //% pagePauseMillis.defl=1000
     //% finalPagePauseMillis.shadow=timePicker
