@@ -198,5 +198,5 @@ duck.setPosition(135, 20)
 
 
 ```package
-arcade-story=github:riknoll/arcade-storytelling
+arcade-story=github:microsoft/arcade-storytelling
 ```

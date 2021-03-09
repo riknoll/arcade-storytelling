@@ -128,5 +128,5 @@ game.onUpdate(function () {
 ```
 
 ```package
-arcade-story=github:riknoll/arcade-storytelling
+arcade-story=github:microsoft/arcade-storytelling
 ```
