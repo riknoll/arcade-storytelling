@@ -1,6 +1,6 @@
 {
     "name": "storytelling",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "",
     "dependencies": {
         "device": "*",
@@ -21,7 +21,7 @@
         "menu.ts",
         "menuState.ts",
         "docs/cancel-current-text.md",
-        "docs/cancel-cutscene",
+        "docs/cancel-cutscene.md",
         "docs/last-answer-equals.md",
         "docs/print-character-text.md",
         "docs/print-dialog.md",
