@@ -34,6 +34,8 @@ namespace story {
     //% block="cancel current text"
     //% help="github:arcade-story/cancel-current-text.md"
     //% group="Cutscene"
+    //% blockGap=8
+    //% weight=20
     export function clearAllText() {
         for (const bubble of getAllBubbles()) {
             bubble.destroy();

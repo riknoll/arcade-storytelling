@@ -1,6 +1,6 @@
 {
     "name": "arcade-story",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "description": "",
     "dependencies": {
         "device": "*",
@@ -32,7 +32,11 @@
         "sprite-move-to-position.md",
         "sprite-move-to-tilemap-location.md",
         "sprite-say.md",
-        "start-cutscene.md"
+        "start-cutscene.md",
+        "set-sound-enabled.md",
+        "cancel-all-cutscenes.md",
+        "get-last-answer.md",
+        "is-menu-open.md"
     ],
     "testFiles": [
         "test.ts"

@@ -3,23 +3,26 @@ namespace story {
 
     enum State {
         Idle,
-        Printing,
-        Choosing
+        Running,
+        Cancelled
     }
 
     class ConversationState {
         state: State;
         lastAnswer: string;
-        cancelled: boolean;
         registeredMenuHandler: boolean;
         currentTask: story.Task;
+        soundEnabled: boolean;
+        cutsceneQueue: (() => void)[];
 
         constructor() {
             this.state = State.Idle;
+            this.soundEnabled = true;
+            this.cutsceneQueue = [];
         }
 
         showMenu(choices: string[]) {
-            if (this.cancelled) return;
+            if (this.state === State.Cancelled) return;
             if (!this.registeredMenuHandler) {
                 this.registeredMenuHandler = true;
                 story.menu.onMenuOptionSelected((option: string, index: number) => {
@@ -103,14 +106,16 @@ namespace story {
                 this.currentTask.cancel();
                 this.currentTask = null;
             }
-            this.cancelled = true;
+            if (this.state === State.Running) {
+                this.state = State.Cancelled;
+            }
         }
     }
 
     /**
      * Starts a cutscene that runs in the background. There can only
-     * be one cutscene active at a time and calling this will cancel any
-     * other cutscene that is currently running.
+     * be one cutscene active at a time, so calling this multiple times
+     * will cause the cutscenes to queue up.
      *
      * @param callback The code to run inside the cutscene
      */
@@ -121,23 +126,18 @@ namespace story {
     //% handlerStatement=1
     //% group="Cutscene"
     export function startCutscene(callback: () => void) {
-        cancelCurrentConversation();
-
-        control.runInParallel(() => {
-            let state = _currentCutscene();
-            if (state.cancelled) {
-                state.cancelled = false;
-                state.state = State.Idle;
-            }
-
-            callback();
-
-            state = _currentCutscene();
-            if (state.cancelled) {
-                state.cancelled = false;
-                state.state = State.Idle;
-            }
-        });
+        _currentCutscene().cutsceneQueue.push(callback);
+        if (_currentCutscene().state === State.Idle) {
+            _currentCutscene().state = State.Running
+            control.runInParallel(() => {
+                while (_currentCutscene().cutsceneQueue.length) {
+                    _currentCutscene().state = State.Running
+                    _currentCutscene().cutsceneQueue.shift()();
+                    pause(1)
+                }
+                _currentCutscene().state = State.Idle;
+            });
+        }
     }
 
     //% blockId=arcade_story_start_conversation
@@ -161,8 +161,8 @@ namespace story {
     //% blockId=arcade_story_print_character_text
     //% block="print character text $text|| with label $label"
     //% help="github:arcade-story//print-character-text.md"
-    //% weight=90
-    //% group="Cutscene"
+    //% weight=30
+    //% group="Text"
     //% blockGap=8
     export function printCharacterText(text: string, label?: string) {
         if (_currentCutscene().cancelled) {
@@ -208,7 +208,7 @@ namespace story {
     //% inlineInputMode=inline
     //% weight=80
     //% blockGap=8
-    //% group="Cutscene"
+    //% group="Menu"
     export function showPlayerChoices(choice1: string, choice2: string, choice3?: string, choice4?: string, choice5?: string) {
         const choices = [choice1];
         if (choice2) choices.push(choice2);
@@ -228,7 +228,7 @@ namespace story {
     //% block="last answer equals $choice"
     //% help="github:arcade-story//last-answer-equals.md"
     //% weight=70
-    //% group="Cutscene"
+    //% group="Menu"
     export function checkLastAnswer(choice: string): boolean {
         return _currentCutscene().lastAnswer === choice;
     }
@@ -237,9 +237,39 @@ namespace story {
     //% block="cancel conversation"
     //% weight=60
     //% deprecated=1
-    //% group="Cutscene"
+    //% group="Menu"
     export function cancelCurrentConversation() {
         cancelCurrentCutscene();
+    }
+
+    /**
+     * Gets the text of the last choice made by the player in a menu created
+     * by "show player choices".
+     *
+     * @returns True if the menu is open and false otherwise
+     */
+    //% blockId=arcade_story_get_last_answer
+    //% block="get last answer"
+    //% help="github:arcade-story/get-last-answer.md"
+    //% weight=60
+    //% blockGap=8
+    //% group="Menu"
+    export function getLastAnswer(): string {
+        return _currentCutscene().lastAnswer;
+    }
+
+    /**
+     * Checks if the menu created by "show player choices" is still open.
+     *
+     * @returns True if the menu is open and false otherwise
+     */
+    //% blockId=arcade_story_is_menu_open
+    //% block="is menu open"
+    //% help="github:arcade-story/is-menu-open.md"
+    //% weight=50
+    //% group="Menu"
+    export function isMenuOpen(): boolean {
+        return story.menu.isMenuOpen();
     }
 
     /**
@@ -247,12 +277,27 @@ namespace story {
      */
     //% blockId=arcade_story_cancel_cutscene
     //% block="cancel cutscene"
-    //% help="github:arcade-story//cancel-cutscene.md"
-    //% weight=60
+    //% help="github:arcade-story/cancel-cutscene.md"
+    //% weight=50
     //% blockGap=8
     //% group="Cutscene"
     export function cancelCurrentCutscene() {
         _currentCutscene().cancel();
+    }
+
+    /**
+     * Cancels the currently active cutscene as well as any pending
+     * cutscenes that haven't started yet.
+     */
+    //% blockId=arcade_story_cancel_all_cutscenes
+    //% block="cancel all cutscenes"
+    //% help="github:arcade-story/cancel-all-cutscenes.md"
+    //% weight=49
+    //% blockGap=8
+    //% group="Cutscene"
+    export function cancelAllCutscenes() {
+        _currentCutscene().cutsceneQueue = [];
+        cancelCurrentCutscene();
     }
 
     function printDialog(text: string, x: number, y: number, height: number, width: number, foreground = 15, background = 1, speed?: story.TextSpeed) {
@@ -282,7 +327,7 @@ namespace story {
 
     export function _pauseUntilTaskIsComplete(task: story.Task) {
         const state = _currentCutscene();
-        pauseUntil(() => task.isDone() || state.cancelled);
+        pauseUntil(() => task.isDone() || state.state === State.Cancelled);
     }
 
     export function _currentCutscene() {
