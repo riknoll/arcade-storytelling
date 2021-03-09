@@ -1,4 +1,6 @@
-# Arcade storytelling extension
+# Arcade story extension
+
+An extension with useful blocks for creating cutscenes and stories in MakeCode Arcade.
 
 #### Metadata (used for search, rendering)
 

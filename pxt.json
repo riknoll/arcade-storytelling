@@ -1,10 +1,9 @@
 {
     "name": "arcade-story",
-    "version": "0.0.8",
+    "version": "1.0.0",
     "description": "",
     "dependencies": {
-        "device": "*",
-        "arcade-tilemap-a-star": "github:jwunderl/arcade-tilemap-a-star#v0.1.7"
+        "device": "*"
     },
     "files": [
         "main.ts",
