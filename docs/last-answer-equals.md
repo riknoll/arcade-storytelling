@@ -114,5 +114,5 @@ story.startCutscene(function () {
 ```
 
 ```package
-arcade-story=github:riknoll/arcade-story
+arcade-storytelling=github:riknoll/arcade-storytelling
 ```
