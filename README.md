@@ -1,3 +1,8 @@
+# Arcade storytelling extension
+
+#### Metadata (used for search, rendering)
+
+* for PXT/arcade
 
 # Contributing
 
