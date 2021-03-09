@@ -18,5 +18,5 @@ story.spriteMoveToTile(sprites.create(img`
 
 
 ```package
-arcade-storytelling=github:riknoll/arcade-storytelling
+arcade-story=github:riknoll/arcade-storytelling
 ```

@@ -1,6 +1,6 @@
 {
-    "name": "storytelling",
-    "version": "0.0.5",
+    "name": "arcade-story",
+    "version": "0.0.6",
     "description": "",
     "dependencies": {
         "device": "*",
