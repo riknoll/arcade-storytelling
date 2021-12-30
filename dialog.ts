@@ -273,6 +273,21 @@ namespace story {
     }
 
     /**
+     * Checks if a cutscene is currently playing. If a call to
+     * "start cutscene" is still running, this will return true.
+     *
+     * @returns True if a cutscene is playing and false otherwise
+     */
+    //% blockId=arcade_story_is_cutscene_playing
+    //% block="is cutscene playing"
+    //% help=github:arcade-story/is-cutscene-playing.md
+    //% weight=0
+    //% group="Cutscene"
+    export function isCutscenePlaying(): boolean {
+        return _currentCutscene().state !== State.Idle;
+    }
+
+    /**
      * Cancels the currently active cutscene.
      */
     //% blockId=arcade_story_cancel_cutscene

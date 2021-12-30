@@ -35,7 +35,8 @@
         "set-sound-enabled.md",
         "cancel-all-cutscenes.md",
         "get-last-answer.md",
-        "is-menu-open.md"
+        "is-menu-open.md",
+        "is-cutscene-playing.md"
     ],
     "testFiles": [
         "test.ts"
